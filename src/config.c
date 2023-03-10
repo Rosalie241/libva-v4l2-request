@@ -65,7 +65,8 @@ VAStatus RequestCreateConfig(VADriverContextP context, VAProfile profile,
 	case VAProfileH264StereoHigh:
 		/* use h264 as fallback */
 		if (pixelformat_str != NULL && 
-			strcmp(pixelformat_str, "mpeg2") == 0) {
+			(strcmp(pixelformat_str, "mpeg2") == 0 ||
+			 strcmp(pixelformat_str, "hevc") == 0)) {
 			return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;
 		}
 		break;
