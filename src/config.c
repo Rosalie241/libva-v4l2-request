@@ -80,6 +80,13 @@ VAStatus RequestCreateConfig(VADriverContextP context, VAProfile profile,
 		break;
 
 	case VAProfileHEVCMain:
+		/* respect hevc */
+		if (pixelformat_str == NULL ||
+			strcmp(pixelformat_str, "hevc") != 0) {
+			return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;
+		}
+		break;
+
 	default:
 		return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;
 	}
