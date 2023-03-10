@@ -29,6 +29,7 @@
 
 #include <assert.h>
 #include <string.h>
+#include <stdlib.h>
 
 #include <sys/ioctl.h>
 
@@ -51,18 +52,33 @@ VAStatus RequestCreateConfig(VADriverContextP context, VAProfile profile,
 	struct object_config *config_object;
 	VAConfigID id;
 	int i, index;
+	char* pixelformat_str = NULL;
+
+	pixelformat_str = getenv("LIBVA_V4L2_REQUEST_PIXELFORMAT");
 
 	switch (profile) {
-	
+
 	case VAProfileH264Main:
 	case VAProfileH264High:
 	case VAProfileH264ConstrainedBaseline:
 	case VAProfileH264MultiviewHigh:
 	case VAProfileH264StereoHigh:
-		// FIXME
+		/* use h264 as fallback */
+		if (pixelformat_str != NULL && 
+			strcmp(pixelformat_str, "mpeg2") == 0) {
+			return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;
+		}
 		break;
+
 	case VAProfileMPEG2Simple:
 	case VAProfileMPEG2Main:
+		/* respect mpeg2 */
+		if (pixelformat_str == NULL ||
+			strcmp(pixelformat_str, "mpeg2") != 0) {
+			return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;
+		}
+		break;
+
 	case VAProfileHEVCMain:
 	default:
 		return VA_STATUS_ERROR_UNSUPPORTED_PROFILE;

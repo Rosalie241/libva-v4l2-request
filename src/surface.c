@@ -66,6 +66,7 @@ VAStatus RequestCreateSurfaces2(VADriverContextP context, unsigned int format,
 	unsigned int index_base;
 	unsigned int index;
 	unsigned int i, j;
+	char* pixelformat_str = NULL;
 	VASurfaceID id;
 	bool found;
 	int rc;
@@ -84,6 +85,15 @@ VAStatus RequestCreateSurfaces2(VADriverContextP context, unsigned int format,
 	unsigned int output_type = v4l2_type_video_output(false);
 
 	if (!SET_FORMAT_OF_OUTPUT_ONCE) {
+		/* make forced format changable using an env var */
+		pixelformat_str = getenv("LIBVA_V4L2_REQUEST_PIXELFORMAT");
+		if (pixelformat_str != NULL &&
+			strcmp(pixelformat_str, "mpeg2") == 0) {
+			pixelformat = V4L2_PIX_FMT_MPEG2;
+		} else {
+			pixelformat = V4L2_PIX_FMT_H264_SLICE;
+		}
+
 		rc = v4l2_set_format(driver_data->video_fd, output_type, pixelformat,
 				width, height);
 		if (rc < 0) {
