@@ -47,7 +47,7 @@
 
 static void h265_fill_pps(VAPictureParameterBufferHEVC *picture,
 			  VASliceParameterBufferHEVC *slice,
-			  struct v4l2_ctrl_hevc_pps *pps)
+			  struct v4l2_ctrl_hevc_pps_internal *pps)
 {
 	memset(pps, 0, sizeof(*pps));
 
@@ -102,7 +102,7 @@ static void h265_fill_pps(VAPictureParameterBufferHEVC *picture,
 }
 
 static void h265_fill_sps(VAPictureParameterBufferHEVC *picture,
-			  struct v4l2_ctrl_hevc_sps *sps)
+			  struct v4l2_ctrl_hevc_sps_internal *sps)
 {
 	memset(sps, 0, sizeof(*sps));
 
@@ -161,7 +161,7 @@ static void h265_fill_slice_params(VAPictureParameterBufferHEVC *picture,
 				   VASliceParameterBufferHEVC *slice,
 				   struct object_heap *surface_heap,
 				   void *source_data,
-				   struct v4l2_ctrl_hevc_slice_params *slice_params)
+				   struct v4l2_ctrl_hevc_slice_params_internal *slice_params)
 {
 	struct object_surface *surface_object;
 	VAPictureHEVC *hevc_picture;
@@ -375,9 +375,9 @@ int h265_set_controls(struct request_data *driver_data,
 	VAIQMatrixBufferHEVC *iqmatrix =
 		&surface_object->params.h265.iqmatrix;
 	bool iqmatrix_set = surface_object->params.h265.iqmatrix_set;
-	struct v4l2_ctrl_hevc_pps pps;
-	struct v4l2_ctrl_hevc_sps sps;
-	struct v4l2_ctrl_hevc_slice_params slice_params;
+	struct v4l2_ctrl_hevc_pps_internal pps;
+	struct v4l2_ctrl_hevc_sps_internal sps;
+	struct v4l2_ctrl_hevc_slice_params_internal slice_params;
 	int rc;
 
 	h265_fill_pps(picture, slice, &pps);

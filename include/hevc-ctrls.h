@@ -28,7 +28,7 @@
 #define V4L2_HEVC_SLICE_TYPE_I	2
 
 /* The controls are not stable at the moment and will likely be reworked. */
-struct v4l2_ctrl_hevc_sps {
+struct v4l2_ctrl_hevc_sps_internal {
 	/* ISO/IEC 23008-2, ITU-T Rec. H.265: Sequence parameter set */
 	__u8	chroma_format_idc;
 	__u8	separate_colour_plane_flag;
@@ -62,7 +62,7 @@ struct v4l2_ctrl_hevc_sps {
 	__u8	strong_intra_smoothing_enabled_flag;
 };
 
-struct v4l2_ctrl_hevc_pps {
+struct v4l2_ctrl_hevc_pps_internal {
 	/* ISO/IEC 23008-2, ITU-T Rec. H.265: Picture parameter set */
 	__u8	dependent_slice_segment_flag;
 	__u8	output_flag_present_flag;
@@ -104,7 +104,7 @@ struct v4l2_ctrl_hevc_pps {
 
 #define V4L2_HEVC_DPB_ENTRIES_NUM_MAX		16
 
-struct v4l2_hevc_dpb_entry {
+struct v4l2_hevc_dpb_entry_internal {
 	__u64	timestamp;
 	__u8	rps;
 	__u8	field_pic;
@@ -112,7 +112,7 @@ struct v4l2_hevc_dpb_entry {
 	__u8	padding[2];
 };
 
-struct v4l2_hevc_pred_weight_table {
+struct v4l2_hevc_pred_weight_table_internal {
 	__u8	luma_log2_weight_denom;
 	__s8	delta_chroma_log2_weight_denom;
 
@@ -129,7 +129,7 @@ struct v4l2_hevc_pred_weight_table {
 	__u8	padding[2];
 };
 
-struct v4l2_ctrl_hevc_slice_params {
+struct v4l2_ctrl_hevc_slice_params_internal {
 	__u32	bit_size;
 	__u32	data_bit_offset;
 
@@ -167,7 +167,7 @@ struct v4l2_ctrl_hevc_slice_params {
 	__u8	pic_struct;
 
 	/* ISO/IEC 23008-2, ITU-T Rec. H.265: General slice segment header */
-	struct v4l2_hevc_dpb_entry dpb[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
+	struct v4l2_hevc_dpb_entry_internal dpb[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
 	__u8	num_active_dpb_entries;
 	__u8	ref_idx_l0[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
 	__u8	ref_idx_l1[V4L2_HEVC_DPB_ENTRIES_NUM_MAX];
@@ -177,7 +177,7 @@ struct v4l2_ctrl_hevc_slice_params {
 	__u8	num_rps_poc_lt_curr;
 
 	/* ISO/IEC 23008-2, ITU-T Rec. H.265: Weighted prediction parameter */
-	struct v4l2_hevc_pred_weight_table pred_weight_table;
+	struct v4l2_hevc_pred_weight_table_internal pred_weight_table;
 
 	__u8	padding[2];
 };
