@@ -89,7 +89,7 @@ VAStatus RequestCreateSurfaces2(VADriverContextP context, unsigned int format,
 		pixelformat_str = getenv("LIBVA_V4L2_REQUEST_PIXELFORMAT");
 		if (pixelformat_str != NULL &&
 			strcmp(pixelformat_str, "mpeg2") == 0) {
-			pixelformat = V4L2_PIX_FMT_MPEG2;
+			pixelformat = V4L2_PIX_FMT_MPEG2_SLICE;
 		} else {
 			pixelformat = V4L2_PIX_FMT_H264_SLICE;
 		}
